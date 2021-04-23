@@ -1,0 +1,24 @@
+# https://github.com/actions/stale
+name: Mark question issues that are out of SLA
+on:
+  schedule:
+  - cron: "0 16 * * *"
+
+jobs:
+  stale:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/stale@v3
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        operations-per-run: 60
+        stale-issue-message: '@jasonnutter @sameerag This issue is about to be out of SLA. Please answer the issue and add answered label.'
+        stale-issue-label: 'to-be-out-of-sla'
+        only-labels: 'question'
+        exempt-issue-labels: 'answered'
+        exempt-pr-labels: 'question'
+        remove-stale-when-updated: false
+        days-before-issue-stale: 4
+        days-before-close: -1
